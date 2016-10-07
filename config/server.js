@@ -6,6 +6,12 @@
  */
 module.exports = {
     /**
+     * enable debug mode to have a verbose console output
+     * @type {boolean}
+     */
+    debug: true,
+
+    /**
      * port number to listen on
      * @type {number|string}
      */

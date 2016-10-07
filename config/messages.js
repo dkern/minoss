@@ -21,7 +21,7 @@ module.exports = {
      * message when try to access a reserved name
      * @type {string}
      */
-    moduleReversed: "module '{module}' is not available",
+    moduleReserved: "module '{module}' is not available",
 
     /**
      * message when module folder was not found

@@ -8,6 +8,7 @@ It's very easy to extend too.
 * [Install Modules](#install-modules)
 * [Configuration](#configuration)
 * [Start Minoss](#start-minoss)
+* [Let Minoss run forever](#let-minoss-run-forever)
 * [Call a Module-Script](#call-a-module-script)
 * [Output Formats](#output-formats)
 * [Configure a Module](#configure-a-module)
@@ -21,10 +22,20 @@ It's very easy to extend too.
 
 
 ## Install Minoss
-Inside a Folder where you want to use Minoss just install it with [NPM](https://www.npmjs.com):
+Inside a Folder where you want to use Minoss you just need to download the project files.
+You could use the `zip` file from GitHub with the latest version.
+To unpack the archive you can use `unzip` or any other tool you like.
 
 ```SH
-$ npm install minoss
+$ wget https://github.com/eisbehr-/minoss/archive/master.zip
+$ unzip master.zip
+```
+
+By default Minoss will be stored inside `minoss/` folder.
+If you want to have it in the parent directory itself, just move the files and delete the folder.
+
+```SH
+$ cd minoss/ | mv * ../ | cd .. | rm -rf minoss/
 ```
 
 
@@ -56,6 +67,28 @@ After start a Message should notice about where the Server is listening by now.
 ```
 $ Minoss now listening on http://localhost:8080 ...
 ```
+
+
+## Let Minoss run forever
+You may want to let the Server running forever and automatically start it after reboot or crash.
+Therefore you could use [`pm2`](https://github.com/Unitech/PM2), a process manager for `node.js`.
+
+If you aren't use `pm2` already, you can install it globally.
+
+```SH
+$ npm install pm2 -g
+```
+
+Once installed you can add Minoss execution to the handling of `pm2`:
+
+```SH
+$ pm2 startup
+$ pm2 start server.js
+$ pm2 save
+```
+
+And that's it, your Server will now run automatically on every boot.
+`pm2` will even restart your Server when it crashes.
 
 
 ## Call a Module-Script
@@ -94,7 +127,7 @@ Currently available:
 
 ## Configure a Module
 Many Modules would need configuration files.
-If you install Modules with [NPM](https://www.npmjs.com) you would lost these or have to edite files in the `node_modules` folder.
+If you install Modules with [NPM](https://www.npmjs.com) you would lost these or have to edit files in the `node_modules` folder.
 Each is not quite usable.
 Because of this you can place all your configuration inside the `config/` folder of the Minoss root.
 Just create a sub-folder there, with the Name of the Module you want to override and place the configs there.
@@ -109,6 +142,10 @@ config/
   | - messages.js
   | - server.js
 ```
+
+
+## Overwrite Module Files
+
 
 ## Validating Scripts
 Because you will not see all errors on blind execution of your scripts, there is a build in javascript validation with `jshint`.
