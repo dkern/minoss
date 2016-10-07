@@ -23,6 +23,24 @@ It's very easy to extend too.
 
 ## Install Minoss
 Inside a Folder where you want to use Minoss you just need to download the project files.
+
+
+#### 1st Way: Use `npm` and move the Files
+Easiest way is to use [NPM](https://www.npmjs.com) to download everything for you.
+
+```SH
+$ npm install eisbehr-/minoss
+```
+
+Afterwards you should copy the `node_modules/minoss/` Folder in the current directory.
+You would not need the `node_modules/` Folder here.
+
+```SH
+$ shopt -s dotglob ; mv node_modules/minoss/* ./ ; rm -rf node_modules/
+```
+
+
+#### 2nd Way: Download the ZIP File and extract
 You could use the `zip` file from GitHub with the latest version.
 To unpack the archive you can use `unzip` or any other tool you like.
 
@@ -31,20 +49,20 @@ $ wget https://github.com/eisbehr-/minoss/archive/master.zip
 $ unzip minoss-master.zip
 ```
 
-By default Minoss will be stored inside `minoss/` folder.
-If you want to have it in the parent directory itself, just move the files and delete the folder.
+By default Minoss will be stored inside `minoss-master/` folder.
+If you want to have it in the parent directory itself, just move the files and delete the Folder afterwards.
 
 ```SH
-$ cd minoss-master/ ; shopt -s dotglob ; mv * ../ ; cd .. ; rm -rf minoss-master/
+$ shopt -s dotglob ; mv minoss-master/* ./ ; rm -rf minoss-master/
 ```
 
 
 ## Install Modules
-If you want to use other public Modules, just install them with [NPM](https://www.npmjs.com) too.
+If you want to use other public Modules, just install them with NPM too.
 For example:
 
 ```SH
-$ npm install minoss-hue
+$ npm install eisbehr-/minoss-example
 ```
 
 
