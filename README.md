@@ -35,7 +35,7 @@ By default Minoss will be stored inside `minoss/` folder.
 If you want to have it in the parent directory itself, just move the files and delete the folder.
 
 ```SH
-$ cd minoss-master/ ; mv * ../ ; cd .. ; rm -rf minoss-master/
+$ cd minoss-master/ ; shopt -s dotglob ; mv * ../ ; cd .. ; rm -rf minoss-master/
 ```
 
 

@@ -9,7 +9,7 @@ module.exports = {
      * enable debug mode to have a verbose console output
      * @type {boolean}
      */
-    debug: true,
+    debug: false,
 
     /**
      * port number to listen on
