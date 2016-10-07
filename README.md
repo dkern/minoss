@@ -28,14 +28,14 @@ To unpack the archive you can use `unzip` or any other tool you like.
 
 ```SH
 $ wget https://github.com/eisbehr-/minoss/archive/master.zip
-$ unzip master.zip
+$ unzip minoss-master.zip
 ```
 
 By default Minoss will be stored inside `minoss/` folder.
 If you want to have it in the parent directory itself, just move the files and delete the folder.
 
 ```SH
-$ cd minoss/ | mv * ../ | cd .. | rm -rf minoss/
+$ cd minoss-master/ ; mv * ../ ; cd .. ; rm -rf minoss-master/
 ```
 
 
