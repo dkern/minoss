@@ -3,6 +3,10 @@ This is a small yet powerfull Server based on [`node.js`](https://nodejs.org) an
 It's designed to simple create and serve usable APIs for automatising things.
 It's very easy to extend too.
 
+Minoss has a automatically file loading, handling abstractions and configuration changes on many levels.
+Just place the Files on the right place and the Server will handle anything else.
+
+
 ## Table of Contents
 * [Install Minoss](#install-minoss)
 * [Install Modules](#install-modules)
@@ -26,7 +30,7 @@ Inside a Folder where you want to use Minoss you just need to download the proje
 
 
 #### 1st Way: Use `npm` and move the Files
-Easiest way is to use [NPM](https://www.npmjs.com) to download everything for you.
+Easiest way is to use [`npm`](https://www.npmjs.com) to download everything for you.
 
 ```SH
 $ npm install eisbehr-/minoss
@@ -58,7 +62,7 @@ $ shopt -s dotglob ; mv minoss-master/* ./ ; rm -rf minoss-master/
 
 
 ## Install Modules
-If you want to use other public Modules, just install them with NPM too.
+If you want to use other public Modules, just install them with npm too.
 For example:
 
 ```SH
@@ -139,30 +143,79 @@ There are currently only a few Modules available by myself.
 Feel free to [create own Modules](https://github.com/eisbehr-/minoss-example) on your own or spread some new ones with other.
 Currently available:
 
-- [minoss-hue](https://github.com/eisbehr-/minoss-hue): Controlling Philips Hue Devices and Lamps
 - [minoss-example](https://github.com/eisbehr-/minoss-example): An example Module explaining how to use Modules
+- [minoss-hue](https://github.com/eisbehr-/minoss-hue): Controlling Philips Hue Devices and Lamps
+- [minoss-surveillance](https://github.com/eisbehr-/minoss-surveillance): Controlling the Synology Surveillance Station
 
 
 ## Configure a Module
 Many Modules would need configuration files.
-If you install Modules with [NPM](https://www.npmjs.com) you would lost these or have to edit files in the `node_modules` folder.
+If you install Modules with `npm` you would lost these or have to edit files in the `node_modules` folder.
 Each is not quite usable.
-Because of this you can place all your configuration inside the `config/` folder of the Minoss root.
-Just create a sub-folder there, with the Name of the Module you want to override and place the configs there.
+
+Because of this you can place all your configuration inside the `config/` folder of the Minoss root, or in a local Module instance.
 The sever will select these files then instead.
+The order for overwriting configuration is: `node installed Module` -> `local Module` -> `root config/ folder`
+
+To overwrite a configuration with a local instance, just create a sub-folder there, with the Name of the Module you want to override and place the configs there.
 
 ```
-config/
-  |- hue/
-    |- bridges.js
-    |- groups.js
-    |- lamps.js
-  | - messages.js
-  | - server.js
+htdocs/
+  |- hue/              <-- module name
+    |- config/
+      |- bridges.js    <-- overriding configuration
+```
+
+Anotherway, if you don't need a local Module, is to place all configurations in the `config/` directory of the root Folder.
+Just create a sub-folder with the Name of the Module you want to override.
+
+```
+htdocs/
+  |- config/
+    |- hue/            <-- module name
+      |- bridges.js    <-- overriding configuration
+    | - messages.js
+    | - server.js
 ```
 
 
 ## Overwrite Module Files
+It is possible to override files of other Modules, installed with `npm`.
+There is no need to copy the whole Module.
+Just copy the Script you want to change inside a local Module folder.
+
+```
+htdocs/
+  |- config/
+  |- node_modules/
+    |- minoss-example
+      |- example.js      <-- the file you want to override
+  |- src/
+  |- .jshintrc
+  |- gulpfile.js
+  |- package.json
+  |- README.md
+  |- server.js
+```
+
+```
+htdocs/
+  |- config/
+  |- example/
+    |- example.js        <-- place it here to override
+  |- node_modules/
+    |- minoss-example
+      |- example.js
+  |- src/
+  |- .jshintrc
+  |- gulpfile.js
+  |- package.json
+  |- README.md
+  |- server.js
+```
+
+You only need to change the `require` entries to the correct files, if used, and you're ready to go.
+All other scripts will be loaded from `node_modules/example/` like before.
 
 
 ## Validating Scripts
