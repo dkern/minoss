@@ -1,7 +1,7 @@
 "use strict";
 
 var config = require("../config/server");
-var xml = require("xml");
+var xml = require("js2xmlparser");
 
 /**
  * contains functions for responding data
@@ -40,25 +40,15 @@ var response = {
 
         // xml
         else if( req.query.output === "xml" ) {
-            //noinspection JSAnnotator
-            var obj = {[response.xmlRootTag]: []};
-
-            // reformat object for xml
-            for( var key in data ) {
-                if( data.hasOwnProperty(key) ) {
-                    //noinspection JSAnnotator
-                    var node = {[key]: data[key]};
-                    obj[response.xmlRootTag].push(node);
-                }
-            }
-
             res.type("text/xml");
-            res.send(xml(obj, {declaration: true}));
+            //noinspection JSCheckFunctionSignatures
+            res.send(xml.parse(response.xmlRootTag, data, {cdataInvalidChars: true}));
         }
 
         // json (default)
         else {
-            res.json(data);
+            res.type("application/json");
+            res.send(JSON.stringify(data, null, 2));
         }
     },
 

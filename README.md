@@ -1,7 +1,6 @@
 # Minoss - Mini Node Script Server
-This is a small yet powerfull Server based on [`node.js`](https://nodejs.org) and [`express`](http://expressjs.com).
-It's designed to simple create and serve usable APIs for automatising things.
-It's very easy to extend too.
+This is a small yet powerful Server based on [`node.js`](https://nodejs.org) and [`express`](http://expressjs.com).
+It's designed to simple create and serve usable APIs for automatising things, like with the [`Raspberry Pi`](https://www.raspberrypi.org/) and is very easy to extend.
 
 Minoss has a automatically file loading, handling abstractions and configuration changes on many levels.
 Just place the Files on the right place and the Server will handle anything else.
@@ -143,7 +142,7 @@ There are currently only a few Modules available by myself.
 Feel free to [create own Modules](https://github.com/eisbehr-/minoss-example) on your own or spread some new ones with other.
 Currently available:
 
-- [minoss-example](https://github.com/eisbehr-/minoss-example): An example Module explaining how to use Modules
+- [minoss-example](https://github.com/eisbehr-/minoss-example): An example Module explaining how to create and use Modules
 - [minoss-hue](https://github.com/eisbehr-/minoss-hue): Controlling Philips Hue Devices and Lamps
 - [minoss-surveillance](https://github.com/eisbehr-/minoss-surveillance): Controlling the Synology Surveillance Station
 
