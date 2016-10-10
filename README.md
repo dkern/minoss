@@ -1,14 +1,15 @@
 # Minoss - Mini Node Script Server
 This is a small yet powerful Server based on [`node.js`](https://nodejs.org) and [`express`](http://expressjs.com).
-It's designed to simple create and serve usable APIs for automatising things, like with the [`Raspberry Pi`](https://www.raspberrypi.org/) and is very easy to extend.
+It's designed to simple create and serve usable APIs for automatising things, like with the [`Raspberry Pi`](https://www.raspberrypi.org/) or whenever it's needed to easily execute scripts.
+Minoss is very easy to extend for your needs.
 
-Minoss has a automatically file loading, handling abstractions and configuration changes on many levels.
+Build in it has a automatically file loading, handling abstractions and configurations on many levels.
 Just place the Files on the right place and the Server will handle anything else.
 
 
 ## Table of Contents
 * [Install Minoss](#install-minoss)
-* [Install Modules](#install-modules)
+* [Installation](#installation)
 * [Configuration](#configuration)
 * [Start Minoss](#start-minoss)
 * [Let Minoss run forever](#let-minoss-run-forever)
@@ -24,44 +25,17 @@ Just place the Files on the right place and the Server will handle anything else
 ---
 
 
-## Install Minoss
-Inside a Folder where you want to use Minoss you just need to download the project files.
-
-
-#### 1st Way: Use `npm` and move the Files
-Easiest way is to use [`npm`](https://www.npmjs.com) to download everything for you.
+## Installation
+Inside a Folder where you want to install Minoss you just need to download the project files.
+It's possible to download the [`zip` archive from GitHub](https://github.com/eisbehr-/minoss/archive/master.zip) or use `git` to download the latest files.
 
 ```SH
-$ npm install eisbehr-/minoss
-```
-
-Afterwards you should copy the `node_modules/minoss/` Folder in the current directory.
-You would not need the `node_modules/` Folder here.
-
-```SH
-$ shopt -s dotglob ; mv node_modules/minoss/* ./ ; rm -rf node_modules/
-```
-
-
-#### 2nd Way: Download the ZIP File and extract
-You could use the `zip` file from GitHub with the latest version.
-To unpack the archive you can use `unzip` or any other tool you like.
-
-```SH
-$ wget https://github.com/eisbehr-/minoss/archive/master.zip
-$ unzip minoss-master.zip
-```
-
-By default Minoss will be stored inside `minoss-master/` folder.
-If you want to have it in the parent directory itself, just move the files and delete the Folder afterwards.
-
-```SH
-$ shopt -s dotglob ; mv minoss-master/* ./ ; rm -rf minoss-master/
+$ git clone https://github.com/eisbehr-/minoss.git .
 ```
 
 
 ## Install Modules
-If you want to use other public Modules, just install them with npm too.
+If you want to use other public Modules the easiest way to install them is to use [npm](https://npmjs.com).
 For example:
 
 ```SH
@@ -75,11 +49,22 @@ You will find anything with a small description inside the `config/` folder of t
 Change the options as you like.
 
 
+### Custom Routes
+The configuration allows you to add own routes to the server.
+Because Minoss is based on `express` you can use it's full [routing functions](https://expressjs.com/en/guide/routing.html). 
+
+```JS
+routes: function(app) {
+    app.get("/example", function(req, res) {
+        res.send("example response");
+    });
+}
+```
+
 ## Start Minoss
-The Server can be started one time by using `npm start` or manually by `node server.js` inseide the directory.
+The Server can be started one time by using `npm start` or manually by `node server.js` inside the directory where you installed it.
 
 ```SH
-$ npm start
 $ node server.js
 ```
 

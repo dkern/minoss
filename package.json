@@ -1,11 +1,11 @@
 {
   "name": "minoss",
   "title": "Mini Node Script Server",
-  "version": "0.1.0",
-  "description": "Designet for small environments, like Raspberry Pi, to easily access and response Data from Tasks and APIs.",
+  "version": "0.1.1",
+  "description": "Mini Node Script Server - Simple API Server with auto-loading, abstraction and configuration handling for IoT automation.",
   "main": "server.js",
-  "homepage": "http://eisbehr.de/",
-  "bugs": "http://github.com/eisbehr-/minoss/issues",
+  "homepage": "https://github.com/eisbehr-/minoss",
+  "bugs": "https://github.com/eisbehr-/minoss/issues",
   "author": {
     "name": "Daniel 'Eisbehr' Kern",
     "email": "jquery@eisbehr.de",

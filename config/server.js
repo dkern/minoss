@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * express server configuration
+ * server configuration
  * @type {object}
  */
 module.exports = {
@@ -31,8 +31,7 @@ module.exports = {
     routes: function(app) {
         /**
          * example:
-         *
-         * app.get("/example", function(request, response) {
+         * app.get("/example", function(req, res) {
          *     res.send("example response");
          * });
          */

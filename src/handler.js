@@ -1,9 +1,9 @@
 "use strict";
 
+var fs = require("fs");
 var debug = require("./debug");
 var autoloader = require("./autoloader");
 var response = require("./response");
-var fs = require("fs");
 var _ = require("./formatter");
 
 /**
@@ -19,7 +19,8 @@ var handler = {
      * @returns {*}
      */
     request: function(req, res) {
-        debug("--- REQUEST ----------");
+        // clean console on debug
+        debug("\x1Bc--- REQUEST --- " + Date.now() + " ----------");
 
         var module = req.params.module;
         var script = req.params.script;
@@ -37,19 +38,9 @@ var handler = {
             );
         }
         catch( err ) {
-            // error: module name reserved
-            if( err.message === "moduleReserved" ) {
-                return response.error(req, res, _(err.message, {module: module}));
-            }
-
-            // error: module missing
-            if( err.message === "moduleMissing" ) {
-                return response.error(req, res, _(err.message, {module: module}));
-            }
-
-            // error: module script missing
-            if( err.message === "scriptMissing" ) {
-                return response.error(req, res, _(err.message, {script: script}));
+            // predefined messages
+            if( err.message === "moduleReserved" || err.message === "moduleMissing" || err.message === "scriptMissing" ) {
+                return response.error(req, res, _(err.message, {module: module, script: script}));
             }
 
             return response.error(req, res, err.message);
@@ -57,20 +48,15 @@ var handler = {
     },
 
     /**
-     * callback function for executed scripts
+     * response callback function for executed scripts
      * @access private
      * @param {object} result
      * @return void
      */
     respond: function(result) {
-        // handle success shortcut
-        if( result === true ) {
-            result = {success: true};
-        }
-
-        // handle fail shortcut
-        if( result === false ) {
-            result = {success: false};
+        // handle shorthand call
+        if( result === true || result === false ) {
+            result = {success: result};
         }
 
         // check if success property is set
@@ -79,10 +65,15 @@ var handler = {
         }
 
         response.output(this.req, this.res, result.success ? "1" : "0", result);
+
+        // on debug flush the require cache after handling
+        if( debug.enabled ) {
+            debug.flushRequireCache();
+        }
     },
 
     /**
-     * callback function for executed script
+     * error callback function for failed script
      * @access private
      * @param {object|string} result
      * @return void
@@ -94,12 +85,17 @@ var handler = {
 
         // check if success property is set
         if( !result.hasOwnProperty("success") ) {
-            //noinspection JSUndefinedPropertyAssignment
+            // noinspection JSUndefinedPropertyAssignment
             result.success = false;
         }
 
-        //noinspection JSUnresolvedVariable
-        response.output(this.req, this.res, result.error, result, 404);
+        // noinspection JSUnresolvedVariable
+        response.output(this.req, this.res, result.error || "0", result, 404);
+
+        // on debug flush the require cache after handling
+        if( debug.enabled ) {
+            debug.flushRequireCache();
+        }
     }
 };
 

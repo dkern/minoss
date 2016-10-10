@@ -18,6 +18,12 @@ module.exports = {
     serverStared: "Minoss now listening on http://localhost:{port} ...",
 
     /**
+     * the selected port is actually in use
+     * @type {string}
+     */
+    serverPortBusy: "server port {port} is already in use",
+
+    /**
      * message when try to access a reserved name
      * @type {string}
      */
@@ -33,5 +39,5 @@ module.exports = {
      * message when script file in module folder was not found
      * @type {string}
      */
-    scriptMissing: "script '{script}' not found",
+    scriptMissing: "script '{script}' not found"
 };
