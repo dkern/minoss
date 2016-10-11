@@ -140,7 +140,7 @@ module.exports = {
 
         // get node module configs first
         try {
-            var modulePath = require.resolve(modulePrefix + cache[module].name);
+            var modulePath = require.resolve(cache[module].name);
             var moduleDir = path.dirname(modulePath);
 
             if( moduleDir ) {
@@ -160,17 +160,15 @@ module.exports = {
         }
 
         // local module
-        if( !cache[module].node ) {
-            var localFiles = this.configLocator(configs, "./" + module + "/config");
+        var localFiles = this.configLocator(configs, "./" + module + "/config");
 
-            if( localFiles ) {
-                localFiles.map(function(file) {
-                    debug("- found config '" + file + "' for local module '" + module + "'");
-                });
-            }
-            else {
-                debug("- no local module configs for '" + module + "' found");
-            }
+        if( localFiles ) {
+            localFiles.map(function(file) {
+                debug("- found config '" + file + "' for local module '" + module + "'");
+            });
+        }
+        else {
+            debug("- no local module configs for '" + module + "' found");
         }
 
         // local config override
