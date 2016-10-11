@@ -9,13 +9,13 @@ module.exports = {
      * default 404 error message
      * @type {string}
      */
-    error404: "not found",
+    error404: "unknown request",
 
     /**
      * server started console output
      * @type {string}
      */
-    serverStared: "Minoss now listening on http://localhost:{port} ...",
+    serverStared: "Minoss now listening on http://{hostname}:{port} ...",
 
     /**
      * the selected port is actually in use

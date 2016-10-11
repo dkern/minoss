@@ -11,6 +11,7 @@ var xml = require("js2xmlparser");
 var response = {
     /**
      * name of the xml root node
+     * @access private
      * @type {string}
      */
     xmlRootTag: config.xmlRootTag,

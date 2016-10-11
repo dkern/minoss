@@ -21,7 +21,7 @@ module.exports = {
     script: function(module, script) {
         // try to receive information from cache
         if( cache[module] && cache[module].scripts[script] ) {
-            debug("get file for '" + module + "/" + script + "' from cache: " + cache[module].scripts[script]);
+            debug("- get file for '" + module + "/" + script + "' from cache: " + cache[module].scripts[script]);
             return cache[module].scripts[script];
         }
 
@@ -41,7 +41,7 @@ module.exports = {
             localModule = true;
         }
         catch(e) {
-            debug("no local module '" + module + "' found");
+            debug("- no local module '" + module + "' found");
         }
 
         // check for local script file
@@ -55,7 +55,7 @@ module.exports = {
                 localScript = true;
             }
             catch(e) {
-                debug("no local module script for '" + module + "/" + script + "' found");
+                debug("- no local script '" + script + "' for '" + module + "' found");
             }
         }
 
@@ -63,7 +63,7 @@ module.exports = {
         if( localModule && localScript ) {
             // ignore system folders on local instances
             if( module === "config" || module === "node_modules" || module === "src" ) {
-                debug("skip because module '" + module + "' is a reserved name");
+                debug("- skip because module '" + module + "' is a reserved name");
                 throw new Error("moduleReserved");
             }
 
@@ -71,7 +71,7 @@ module.exports = {
             cache[module] = {name: module, node: false, scripts: {}};
             cache[module].scripts[script] = "." + file;
 
-            debug("local module script '" + module + "/" + script + "' found");
+            debug("- local module script '" + module + "/" + script + "' found");
             return cache[module].scripts[script];
         }
 
@@ -88,11 +88,10 @@ module.exports = {
         }
         catch(e) {
             if( !nodeModule ) {
-                debug("no node module for '" + modulePrefix + module + "' found");
+                debug("- no node module '" + modulePrefix + module + "' found");
             }
-
-            if( !nodeScript ) {
-                debug("no node module script for '" + modulePrefix + module + "/" + script + "' found");
+            else if( !nodeScript ) {
+                debug("- no node module script for '" + modulePrefix + module + "/" + script + "' found");
             }
         }
 
@@ -102,19 +101,19 @@ module.exports = {
             cache[module] = {name: modulePrefix + module, node: true, scripts: {}};
             cache[module].scripts[script] = modulePrefix + module + "/" + script;
 
-            debug("node module script '" + modulePrefix + module + "/" + script + "' found");
+            debug("- node module script '" + modulePrefix + module + "/" + script + "' found");
             return cache[module].scripts[script];
         }
 
         // throw error for missing module
         if( !localModule && !nodeModule ) {
-            debug("module '" + module + "' was not found");
+            debug("- module '" + module + "' was not found");
             throw new Error("moduleMissing");
         }
 
         // throw error for missing module script
-        if( !localScript && !nodeScript ) {
-            debug("module '" + module + "/" + script + "' was not found");
+        else if( !localScript && !nodeScript ) {
+            debug("- script '" + script + "' was not found for '" + module + "'");
             throw new Error("scriptMissing");
         }
     },
@@ -127,13 +126,13 @@ module.exports = {
     config: function(module) {
         // if module not already loaded return nothing
         if( !cache[module] ) {
-            debug("module '" + module + "' was not loaded already, respond empty config");
+            debug("- module '" + module + "' was not loaded already, respond empty config");
             return {};
         }
 
         // try to receive information from cache
         if( cache[module].configs ) {
-            debug("return module '" + module + "' config from cache");
+            debug("- return module '" + module + "' config from cache");
             return cache[module].configs;
         }
 
@@ -151,13 +150,13 @@ module.exports = {
                     if( nodeFiles.hasOwnProperty(n) ) {
                         var nodeFileName = path.basename(nodeFiles[n], ".js");
                         configs[nodeFileName] = require(modulePrefix + module + "/config/" + nodeFileName);
-                        debug("found config '" + nodeFileName + "' for node module '" + module + "'");
+                        debug("- found config '" + nodeFileName + "' for node module '" + module + "'");
                     }
                 }
             }
         }
         catch(e) {
-            debug("no node module configs for '" + modulePrefix + module + "' found");
+            debug("- no node module configs for '" + modulePrefix + module + "' found");
         }
 
         // local module
@@ -166,11 +165,11 @@ module.exports = {
 
             if( localFiles ) {
                 localFiles.map(function(file) {
-                    debug("found config '" + file + "' for local module '" + module + "'");
+                    debug("- found config '" + file + "' for local module '" + module + "'");
                 });
             }
             else {
-                debug("no local module configs for '" + module + "' found");
+                debug("- no local module configs for '" + module + "' found");
             }
         }
 
@@ -179,11 +178,11 @@ module.exports = {
 
         if( overrideFiles ) {
             overrideFiles.map(function(file) {
-                debug("found override config '" + file + "' for module '" + module + "'");
+                debug("- found override config '" + file + "' for module '" + module + "'");
             });
         }
         else {
-            debug("no override module configs for '" + module + "' found");
+            debug("- no override module configs for '" + module + "' found");
         }
 
         cache[module].configs = configs;
@@ -192,6 +191,7 @@ module.exports = {
 
     /**
      * helper function to locate and load config files
+     * @access private
      * @param {object} configs
      * @param {string} filesDir
      * @returns {boolean|Array}

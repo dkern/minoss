@@ -19,11 +19,20 @@ var handler = {
      * @returns {*}
      */
     request: function(req, res) {
-        // clean console on debug
-        debug("\x1Bc--- REQUEST --- " + Date.now() + " ----------");
+        // store output format into params
+        if( !req.query.output ) {
+            req.query.output = req.params.output || "json";
+        }
 
-        var module = req.params.module;
-        var script = req.params.script;
+        var module = req.query.module = req.params.module;
+        var script = req.query.script = req.params.script;
+
+        // clean console on debug and track execution time
+        if( debug.enabled ) {
+            console.time("execution");
+            debug("\x1Bc--- REQUEST --- " + Date.now() + " ----------");
+            debug("handle request for '/" + module + "/" + script + "'");
+        }
 
         try {
             var moduleScript = autoloader.script(module, script);
@@ -69,6 +78,7 @@ var handler = {
         // on debug flush the require cache after handling
         if( debug.enabled ) {
             debug.flushRequireCache();
+            console.timeEnd("execution");
         }
     },
 
@@ -95,6 +105,7 @@ var handler = {
         // on debug flush the require cache after handling
         if( debug.enabled ) {
             debug.flushRequireCache();
+            console.timeEnd("execution");
         }
     }
 };
