@@ -49,7 +49,7 @@ $ git clone https://github.com/eisbehr-/minoss.git .
 
 
 ## Install Modules
-If you want to use other public modules the easiest way to install them is to use [npm](https://npmjs.com).
+If you want to use other public modules, the easiest way to install them is to use [npm](https://npmjs.com).
 For example:
 
 ```SH
@@ -203,7 +203,7 @@ Inside this directory all executable scripts takes place.
 The name of the Files are also the name of the script.
 
 For example, when creating a folder and file named `example/test.js`, the module is named `example` and the dcript is named `test`.
-So the URl would be something like `http://localhost:8080/example/test`.
+So the URl would be something like `http://hostname:8080/example/test`.
 
 More details and a full example can be found inside the [`minoss-example`](https://github.com/eisbehr-/minoss-example) repository.
 
@@ -253,7 +253,7 @@ Assuming a request URL like `http://localhost:8080/example/test?mode=get&id=1` t
 var params = {
     module: "example",
     script: "test",
-    outout: "json",
+    output: "json",
     mode: "get",
     id: 1
 };

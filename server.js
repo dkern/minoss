@@ -24,13 +24,13 @@ var port     = config.port || 8080;
 routes(app);
 
 // register module-script route with desired output format
-app.get("/:output(xml|text|json)/:module([a-z]+)/:script([a-z]+)", handler.request);
+app.all("/:output(xml|text|json)/:module([a-z]+)/:script([a-z]+)", handler.request);
 
 // register default module-script routes
-app.get("/:module([a-z]+)/:script([a-z]+)", handler.request);
+app.all("/:module([a-z]+)/:script([a-z]+)", handler.request);
 
 // register 404 not found route
-app.get("*", function(req, res) {
+app.all("*", function(req, res) {
     response.error(req, res, _("error404"));
 });
 
