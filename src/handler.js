@@ -19,13 +19,15 @@ var handler = {
      * @returns {*}
      */
     request: function(req, res) {
+        var requestObj = req.method === "GET" ? req.query : req.body;
+
         // store output format into params
-        if( !req.query.output ) {
-            req.query.output = req.params.output || "json";
+        if( !requestObj.output ) {
+            requestObj.output = req.params.output || "json";
         }
 
-        var module = req.query.module = req.params.module;
-        var script = req.query.script = req.params.script;
+        var module = requestObj.module = req.params.module;
+        var script = requestObj.script = req.params.script;
 
         // clean console on debug and track execution time
         if( debug.enabled ) {
@@ -41,7 +43,7 @@ var handler = {
             // execute script and receive result
             require(moduleScript)(
                 moduleConfig,
-                req.query,
+                requestObj,
                 handler.respond.bind({req: req, res: res}),
                 handler.error.bind({req: req, res: res})
             );

@@ -13,12 +13,17 @@
 
 var os       = require("os");
 var app      = require("express")();
+var parser   = require("body-parser");
 var config   = require("./config/server");
 var routes   = require("./config/routes");
 var handler  = require("./src/handler");
 var _        = require("./src/formatter");
 var response = handler.response;
 var port     = config.port || 8080;
+
+// handle request data else than GET
+app.use(parser.json());
+app.use(parser.urlencoded({extended: true}));
 
 // register custom routes
 routes(app);

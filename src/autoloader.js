@@ -210,7 +210,7 @@ module.exports = {
             return loaded.length ? loaded : false;
         }
         catch(e) {
-            return false
+            return false;
         }
     }
 };

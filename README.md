@@ -1,4 +1,8 @@
 # Minoss - Mini Node Script Server
+[![GitHub version](https://badge.fury.io/gh/eisbehr-%2Fminoss.svg)](http://github.com/eisbehr-/minoss)
+[![NPM version](https://badge.fury.io/js/minoss.svg)](http://www.npmjs.org/package/minoss)
+[![Dependency version](https://david-dm.org/eisbehr-/minoss.png)](https://david-dm.org/eisbehr-/minoss)
+
 This is a small yet powerful server based on [`node.js`](https://nodejs.org) and [`express`](http://expressjs.com).
 It's designed to simple create and serve usable APIs for automatising things, like with the [`Raspberry Pi`](https://www.raspberrypi.org/) or whenever it's needed to easily execute scripts.
 Minoss is very easy to extend for your needs.
@@ -62,11 +66,11 @@ Minoss itself only has a very small configuration.
 You will find anything with a description inside the `config/server.js` file.
 Change the options as you like.
 
-name        | default  | description
-------------|----------|--------------
-debug       | false    | enable debug mode to have a verbose console output
-port        | 8080     | port number to listen on after start
-xmlRootTag  | root     | name of the xml root tag
+| name       | default | description
+| :--------- | :------ | :-----------
+| debug      | false   | enable debug mode to have a verbose console output
+| port       | 8080    | port number to listen on after start
+| xmlRootTag | root    | name of the xml root tag
 
 
 ### Custom Routes
@@ -90,9 +94,7 @@ $ node server.js
 
 After start a message should notice about where the server is listening by now.
 
-```TEXT
-$ Minoss now listening on http://localhost:8080 ...
-```
+> Minoss now listening on http://localhost:8080 ...
 
 
 ### Let Minoss run forever
@@ -121,9 +123,7 @@ If you want to stop it with `pm2 stop minoss`.
 You call and execute a script always by `module` and `script` name.
 Minoss will do anything else for you.
 
-```TEXT
-http://localhost:8080/{MODULE}/{SCRIPT}
-```
+> http://localhost:8080/{MODULE}/{SCRIPT}
 
 
 ## Output Formats
@@ -135,11 +135,9 @@ Just put the wanted output format before the `module` and `script` name, or appe
 ### JSON
 Possible calls:
 
-```TEXT
-http://localhost:8080/module/script
-http://localhost:8080/json/module/script
-http://localhost:8080/module/script?output=json
-```
+> http://localhost:8080/module/script  
+> http://localhost:8080/**json**/module/script  
+> http://localhost:8080/module/script?output=**json**
 
 Will output something like:
 
@@ -153,10 +151,8 @@ Will output something like:
 ### XML
 Possible calls:
 
-```TEXT
-http://localhost:8080/xml/module/script
-http://localhost:8080/module/script?output=xml
-```
+> http://localhost:8080/**xml**/module/script  
+> http://localhost:8080/module/script?output=**xml**
 
 Will output something like:
 
@@ -171,10 +167,8 @@ Will output something like:
 ### Text
 Possible calls:
 
-```TEXT
-http://localhost:8080/text/module/script
-http://localhost:8080/module/script?output=text
-```
+> http://localhost:8080/**text**/module/script  
+> http://localhost:8080/module/script?output=**text**
 
 The `text` output format will return `1` on success and `0` on failure.
 If an error message is available it will be return just the message itself.
@@ -219,12 +213,12 @@ module.exports = function(config, params, respond, error) {
 };
 ``` 
 
-name     | type      | description
----------|-----------|--------------
-config   | object    | contains all configurations for this module
-params   | object    | contains all parameters given by request url
-respond  | function  | callback function for browser response
-error    | function  | callback function for errors
+| name    | type     | description
+| :------ | :------- | :-----------
+| config  | object   | contains all configurations for this module
+| params  | object   | contains all parameters given by request url
+| respond | function | callback function for browser response
+| error   | function | callback function for errors
 
 
 #### 'config' Parameter
