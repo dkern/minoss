@@ -3,8 +3,8 @@
 var debug = require("./debug");
 var path = require("path");
 var fs = require("fs");
-var cache = {};
 
+var cache = {};
 var modulePrefix = "minoss-";
 
 /**
@@ -148,9 +148,11 @@ module.exports = {
 
                 for( var n in nodeFiles ) {
                     if( nodeFiles.hasOwnProperty(n) ) {
-                        var nodeFileName = path.basename(nodeFiles[n], ".js");
-                        configs[nodeFileName] = require(modulePrefix + module + "/config/" + nodeFileName);
-                        debug("- found config '" + nodeFileName + "' for node module '" + module + "'");
+                        if( path.extname(nodeFiles[n]) === ".js" ) {
+                            var nodeFileName = path.basename(nodeFiles[n], ".js");
+                            configs[nodeFileName] = require(modulePrefix + module + "/config/" + nodeFileName);
+                            debug("- found config '" + nodeFileName + "' for node module '" + module + "'");
+                        }
                     }
                 }
             }
@@ -201,9 +203,11 @@ module.exports = {
 
             for( var f in files ) {
                 if( files.hasOwnProperty(f) ) {
-                    var fileName = path.basename(files[f], ".js");
-                    configs[fileName] = require("." + filesDir + "/" + fileName);
-                    loaded.push(fileName);
+                    if( path.extname(files[f]) === ".js" ) {
+                        var fileName = path.basename(files[f], ".js");
+                        configs[fileName] = require("." + filesDir + "/" + fileName);
+                        loaded.push(fileName);
+                    }
                 }
             }
 

@@ -75,7 +75,12 @@ var handler = {
             result.success = false;
         }
 
-        response.output(this.req, this.res, result.success ? "1" : "0", result);
+        if( !result.success && result.error ) {
+            response.output(this.req, this.res, result.error, result, 404);
+        }
+        else {
+            response.output(this.req, this.res, result.success ? "1" : "0", result);
+        }
 
         // on debug flush the require cache after handling
         if( debug.enabled ) {
