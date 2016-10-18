@@ -13,6 +13,7 @@ Just place the files on the right place and the Server will handle anything else
 
 ## Table of Contents
 * [Installation](#installation)
+  * [Installation in own Folder](#installation-in-own-folder)
 * [Install Modules](#install-modules)
 * [Configuration](#configuration)
   * [Custom Routes](#custom-routes)
@@ -44,8 +45,24 @@ Just place the files on the right place and the Server will handle anything else
 
 
 ## Installation
-Inside a folder where you want to install Minoss you just need to download the project files.
+Minoss can easily be installed with [npm](https://npmjs.com).
+
+```SH
+$ npm install minoss
+```
+
+If installed this way, it's only needed to require `minoss` in the starting script file.
+Like in an own `server.js` file:
+
+```JS
+require("minoss");
+```
+
+
+### Installation in own Folder
+Another way is, inside a folder where wanted to install Minoss, just to download the project files.
 It's possible to download the [`zip` archive from GitHub](https://github.com/eisbehr-/minoss/archive/master.zip) or use `git` to download the latest files.
+With this way the core files of Minoss are stored inside the root folder.
 
 ```SH
 $ git clone https://github.com/eisbehr-/minoss.git .

@@ -1,6 +1,6 @@
 "use strict";
 
-var config = require("../config/server");
+var config = require("./config").server;
 var xml = require("js2xmlparser");
 
 /**

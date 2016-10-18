@@ -1,6 +1,6 @@
 "use strict";
 
-var messages = require("../config/messages"); 
+var messages = require("./config").messages; 
 
 /**
  * format a string for correct output

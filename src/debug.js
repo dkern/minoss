@@ -1,6 +1,6 @@
 "use strict";
 
-var config = require("../config/server");
+var config = require("./config").server;
 
 /**
  * debug output helper

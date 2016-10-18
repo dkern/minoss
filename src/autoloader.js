@@ -27,8 +27,8 @@ module.exports = {
 
         var localModule = false;
         var localScript = false;
-
-        var dir = "./" + module;
+        
+        var dir = process.cwd() + "/" + module;
         var file = dir + "/" + script + ".js";
 
         // check for module directory
@@ -69,7 +69,7 @@ module.exports = {
 
             // create base cache entry
             cache[module] = {name: module, node: false, scripts: {}};
-            cache[module].scripts[script] = "." + file;
+            cache[module].scripts[script] = file;
 
             debug("- local module script '" + module + "/" + script + "' found");
             return cache[module].scripts[script];
@@ -162,7 +162,7 @@ module.exports = {
         }
 
         // local module
-        var localFiles = this.configLocator(configs, "./" + module + "/config");
+        var localFiles = this.configLocator(configs, process.cwd() + "/" + module + "/config");
 
         if( localFiles ) {
             localFiles.map(function(file) {
@@ -174,7 +174,7 @@ module.exports = {
         }
 
         // local config override
-        var overrideFiles = this.configLocator(configs, "./config/" + module);
+        var overrideFiles = this.configLocator(configs, process.cwd() + "/config/" + module);
 
         if( overrideFiles ) {
             overrideFiles.map(function(file) {
