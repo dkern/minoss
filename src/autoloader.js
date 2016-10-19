@@ -205,7 +205,7 @@ module.exports = {
                 if( files.hasOwnProperty(f) ) {
                     if( path.extname(files[f]) === ".js" ) {
                         var fileName = path.basename(files[f], ".js");
-                        configs[fileName] = require("." + filesDir + "/" + fileName);
+                        configs[fileName] = require(filesDir + "/" + fileName);
                         loaded.push(fileName);
                     }
                 }
