@@ -1,19 +1,19 @@
-"use strict";
+'use strict';
 
-var fs = require("fs");
+let fs = require('fs');
 
 /**
  * locate the correct server configuration files
  * @param {string} name
  * @return {object|*}
  */
-function configLocator(name) {
+let configLocator = name => {
     // try local files first
     try {
-        var localFolder = process.cwd() + "/config";
-        var localFile = localFolder + "/" + name + ".js";
+        let localFolder = process.cwd() + '/config';
+        let localFile = localFolder + '/' + name + '.js';
 
-        if( fs.lstatSync(localFolder).isDirectory() && fs.lstatSync(localFile).isFile() ) {
+        if (fs.lstatSync(localFolder).isDirectory() && fs.lstatSync(localFile).isFile()) {
             return require(localFile);
         }
     }
@@ -21,17 +21,16 @@ function configLocator(name) {
 
     // try to get own files instead
     try {
-        var config = require("minoss/config/" + name);
-        return config;
+        return require('minoss/config/' + name);
     }
     catch(e) {}
 
     return {};
-}
+};
 
 // export config files
 module.exports = {
-    messages: configLocator("messages"),
-    routes: configLocator("routes"),
-    server: configLocator("server")
+    messages: configLocator('messages'),
+    routes: configLocator('routes'),
+    server: configLocator('server')
 };

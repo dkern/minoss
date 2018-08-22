@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * server configuration
@@ -15,11 +15,11 @@ module.exports = {
      * port number to listen on
      * @type {number|string}
      */
-    port: "8080",
+    port: 8080,
 
     /**
      * name of the xml root tag
      * @type {string}
      */
-    xmlRootTag: "minoss"
+    xmlRootTag: 'minoss'
 };

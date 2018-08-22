@@ -1,27 +1,24 @@
-"use strict";
+'use strict';
 
-var config = require("./config").server;
+let messages = require('./config').messages.debug;
+let config = require('./config').server;
+let _ = require('./formatter');
 
 /**
  * debug output helper
  * @returns {void}
  */
-var debug = function() {
-    if( config.debug ) {
-        console.log.apply(this, arguments);
-    }
+let debug = function(message, replaces) {
+    config.debug && console.log.apply(this, _(messages[message], replaces));
 };
 
 /**
  * flush the whole require cache
  * @returns void
  */
-debug.flushRequireCache = function() {
-    Object.keys(require.cache).forEach(function(key) {
-        delete require.cache[key];
-    });
-
-    debug("require cache flushed");
+debug.flushRequireCache = () => {
+    Object.keys(require.cache).forEach(key => delete require.cache[key]);
+    debug('require cache flushed');
 };
 
 debug.enabled = config.debug;

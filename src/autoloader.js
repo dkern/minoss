@@ -1,39 +1,39 @@
-"use strict";
+'use strict';
 
-var debug = require("./debug");
-var path = require("path");
-var fs = require("fs");
+let debug = require('./debug');
+let path = require('path');
+let fs = require('fs');
 
-var cache = {};
-var modulePrefix = "minoss-";
+let cache = {};
+let modulePrefix = 'minoss-';
 
 /**
  * autoloader functions
  * @type {object}
  */
-module.exports = {
+let autoloader = {
     /**
      * allocates script file of a module
      * @param {string} module
      * @param {string} script
      * @returns {string}
      */
-    script: function(module, script) {
+    script: (module, script) => {
         // try to receive information from cache
-        if( cache[module] && cache[module].scripts[script] ) {
-            debug("- get file for '" + module + "/" + script + "' from cache: " + cache[module].scripts[script]);
+        if (cache[module] && cache[module].scripts[script]) {
+            debug('scriptFromCache', {script: module + '/' + script, cache: cache[module].scripts[script]});
             return cache[module].scripts[script];
         }
 
-        var localModule = false;
-        var localScript = false;
-        
-        var dir = process.cwd() + "/" + module;
-        var file = dir + "/" + script + ".js";
+        let localModule = false,
+            localScript = false;
+
+        let dir = process.cwd() + '/' + module;
+        let file = dir + '/' + script + '.js';
 
         // check for module directory
         try {
-            if( !fs.lstatSync(dir).isDirectory() ) {
+            if (!fs.lstatSync(dir).isDirectory()) {
                 //noinspection ExceptionCaughtLocallyJS
                 throw new Error();
             }
@@ -41,13 +41,13 @@ module.exports = {
             localModule = true;
         }
         catch(e) {
-            debug("- no local module '" + module + "' found");
+            debug('noLocalModule', {module: module});
         }
 
         // check for local script file
-        if( localModule ) {
+        if (localModule) {
             try {
-                if( !fs.lstatSync(file).isFile() ) {
+                if (!fs.lstatSync(file).isFile()) {
                     //noinspection ExceptionCaughtLocallyJS
                     throw new Error();
                 }
@@ -55,66 +55,66 @@ module.exports = {
                 localScript = true;
             }
             catch(e) {
-                debug("- no local script '" + script + "' for '" + module + "' found");
+                debug('noLocalScript', {script: script, module: module});
             }
         }
 
         // stop if local version was found
-        if( localModule && localScript ) {
+        if (localModule && localScript) {
             // ignore system folders on local instances
-            if( module === "config" || module === "node_modules" || module === "src" ) {
-                debug("- skip because module '" + module + "' is a reserved name");
-                throw new Error("moduleReserved");
+            if (module === 'config' || module === 'node_modules' || module === 'src') {
+                debug('reservedModule', {module: module});
+                throw new Error('moduleReserved');
             }
 
             // create base cache entry
             cache[module] = {name: module, node: false, scripts: {}};
             cache[module].scripts[script] = file;
 
-            debug("- local module script '" + module + "/" + script + "' found");
+            debug('localScriptFound', {script: module + '/' + script});
             return cache[module].scripts[script];
         }
 
-        var nodeModule = false;
-        var nodeScript = false;
+        let nodeModule = false;
+        let nodeScript = false;
 
         // check if module is installed as minoss plugin
         try {
             require.resolve(modulePrefix + module);
             nodeModule = true;
 
-            require.resolve(modulePrefix + module + "/" + script);
+            require.resolve(modulePrefix + module + '/' + script);
             nodeScript = true;
         }
         catch(e) {
-            if( !nodeModule ) {
-                debug("- no node module '" + modulePrefix + module + "' found");
+            if (!nodeModule) {
+                debug('noNodeModule', {module: modulePrefix + module});
             }
-            else if( !nodeScript ) {
-                debug("- no node module script for '" + modulePrefix + module + "/" + script + "' found");
+            else if (!nodeScript) {
+                debug('noNodeScript', {script: modulePrefix + module + '/' + script});
             }
         }
 
         // stop if node version was found
-        if( nodeModule && nodeScript ) {
+        if (nodeModule && nodeScript) {
             // create base cache entry
             cache[module] = {name: modulePrefix + module, node: true, scripts: {}};
-            cache[module].scripts[script] = modulePrefix + module + "/" + script;
+            cache[module].scripts[script] = modulePrefix + module + '/' + script;
 
-            debug("- node module script '" + modulePrefix + module + "/" + script + "' found");
+            debug('nodeScriptFound', {script: modulePrefix + module + '/' + script});
             return cache[module].scripts[script];
         }
 
         // throw error for missing module
-        if( !localModule && !nodeModule ) {
-            debug("- module '" + module + "' was not found");
-            throw new Error("moduleMissing");
+        if (!localModule && !nodeModule) {
+            debug('unknownModule', {module: module});
+            throw new Error('moduleMissing');
         }
 
         // throw error for missing module script
-        else if( !localScript && !nodeScript ) {
-            debug("- script '" + script + "' was not found for '" + module + "'");
-            throw new Error("scriptMissing");
+        else if (!localScript && !nodeScript) {
+            debug('unknownScript', {script: script, module: module});
+            throw new Error('scriptMissing');
         }
     },
 
@@ -123,66 +123,56 @@ module.exports = {
      * @param {string} module
      * @return {object}
      */
-    config: function(module) {
+    config: module => {
         // if module not already loaded return nothing
-        if( !cache[module] ) {
-            debug("- module '" + module + "' was not loaded already, respond empty config");
+        if (!cache[module]) {
+            debug('moduleNotLoaded', {module: module});
             return {};
         }
 
         // try to receive information from cache
-        if( cache[module].configs ) {
-            debug("- return module '" + module + "' config from cache");
+        if (cache[module].configs) {
+            debug('configFromCache', {module: module});
             return cache[module].configs;
         }
 
-        var configs = {};
+        let configs = {};
 
         // get node module configs first
         try {
-            var modulePath = require.resolve(cache[module].name);
-            var moduleDir = path.dirname(modulePath);
+            let modulePath = require.resolve(cache[module].name);
+            let moduleDir = path.dirname(modulePath);
 
-            if( moduleDir ) {
-                var nodeFiles = fs.readdirSync(moduleDir + '/config');
-
-                for( var n in nodeFiles ) {
-                    if( nodeFiles.hasOwnProperty(n) ) {
-                        if( path.extname(nodeFiles[n]) === ".js" ) {
-                            var nodeFileName = path.basename(nodeFiles[n], ".js");
-                            configs[nodeFileName] = require(modulePrefix + module + "/config/" + nodeFileName);
-                            debug("- found config '" + nodeFileName + "' for node module '" + module + "'");
-                        }
-                    }
+            moduleDir && fs.readdirSync(moduleDir + '/config').forEach(file => {
+                if (path.extname(file) === '.js') {
+                    let nodeFileName = path.basename(file, '.js');
+                    configs[nodeFileName] = require(modulePrefix + module + '/config/' + nodeFileName);
+                    debug('nodeConfigFound', {config: nodeFileName, module: module});
                 }
-            }
+            });
         }
         catch(e) {
-            debug("- no node module configs for '" + modulePrefix + module + "' found");
+            debug('noNodeConfig', {module: modulePrefix + module});
         }
 
         // local module
-        var localFiles = this.configLocator(configs, process.cwd() + "/" + module + "/config");
+        let localFiles = autoloader.configLocator(configs, process.cwd() + '/' + module + '/config');
 
-        if( localFiles ) {
-            localFiles.map(function(file) {
-                debug("- found config '" + file + "' for local module '" + module + "'");
-            });
+        if (localFiles) {
+            localFiles.map(file => debug('localConfigFound', {config: file, module: module}));
         }
         else {
-            debug("- no local module configs for '" + module + "' found");
+            debug('noLocalConfig', {module: module});
         }
 
         // local config override
-        var overrideFiles = this.configLocator(configs, process.cwd() + "/config/" + module);
+        let overrideFiles = autoloader.configLocator(configs, process.cwd() + '/config/' + module);
 
-        if( overrideFiles ) {
-            overrideFiles.map(function(file) {
-                debug("- found override config '" + file + "' for module '" + module + "'");
-            });
+        if (overrideFiles) {
+            overrideFiles.map(file => debug('overwriteConfigFound', {config: file, module: module}));
         }
         else {
-            debug("- no override module configs for '" + module + "' found");
+            debug('noOverwriteConfigs', {module: module});
         }
 
         cache[module].configs = configs;
@@ -196,25 +186,24 @@ module.exports = {
      * @param {string} filesDir
      * @returns {boolean|Array}
      */
-    configLocator: function(configs, filesDir) {
+    configLocator: (configs, filesDir) => {
         try {
-            var loaded = [];
-            var files = fs.readdirSync(filesDir);
+            let loaded = [];
 
-            for( var f in files ) {
-                if( files.hasOwnProperty(f) ) {
-                    if( path.extname(files[f]) === ".js" ) {
-                        var fileName = path.basename(files[f], ".js");
-                        configs[fileName] = require(filesDir + "/" + fileName);
-                        loaded.push(fileName);
-                    }
+            fs.readdirSync(filesDir).forEach(file => {
+                if (path.extname(file) === '.js') {
+                    let fileName = path.basename(file, '.js');
+                    configs[fileName] = require(filesDir + '/' + fileName);
+                    loaded.push(fileName);
                 }
-            }
+            });
 
             return loaded.length ? loaded : false;
         }
-        catch(e) {
-            return false;
-        }
+        catch(e) {}
+
+        return false;
     }
 };
+
+module.exports = autoloader;

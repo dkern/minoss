@@ -1,7 +1,7 @@
 {
   "name": "minoss",
   "title": "Mini Node Script Server",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Mini Node Script Server - Simple API Server with auto-loading, abstraction and configuration handling for IoT automation.",
   "main": "server.js",
   "homepage": "https://github.com/eisbehr-/minoss",
@@ -21,7 +21,7 @@
     "raspberry",
     "pi"
   ],
-  "license" : "(MIT OR GPL-2.0)",
+  "license": "(MIT OR GPL-2.0)",
   "licenses": [
     {
       "type": "MIT",
@@ -33,13 +33,14 @@
     }
   ],
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "js2xmlparser": "^2.0.2"
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "js2xmlparser": "^3.0.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-jshint": "^2.0.1",
+    "gulp": "^4.0.0",
+    "gulp-jshint": "^2.1.0",
+    "jshint": "^2.9.6",
     "jshint-stylish": "^2.2.1"
   },
   "scripts": {

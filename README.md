@@ -55,7 +55,7 @@ If installed this way, it's only needed to require `minoss` in the starting scri
 Like in an own `server.js` file:
 
 ```JS
-require("minoss");
+require('minoss');
 ```
 
 
@@ -95,8 +95,8 @@ The `routes.js` configuration allows you to add own routes to the server.
 Because Minoss is based on `express` you can use it's full [routing functions](https://expressjs.com/en/guide/routing.html). 
 
 ```JS
-module.exports = function(app) {
-    app.get("/example", function(req, res) {
+module.exports = app => {
+    app.get('/example', (req, res) => {
         res.send("example response");
     });
 }
@@ -225,7 +225,7 @@ This function has four parameters, which will be filled by Minoss on request of 
 
 
 ```JS
-module.exports = function(config, params, respond, error) {
+module.exports = (config, params, respond, error) => {
     respond(true);
 };
 ``` 
@@ -244,7 +244,7 @@ The properties inside this object are the config file names.
 If there would be two config Files, named `config/foo.js` and `config/bar.js`, the object would be look like this:
 
 ```JS
-var config = {
+let config = {
     foo: {
         // export of config/foo.js
     },
@@ -261,11 +261,11 @@ It will at least contain the `module`, `script` and `output` parameters.
 Assuming a request URL like `http://localhost:8080/example/test?mode=get&id=1` the object would be look like this:
 
 ```JS
-var params = {
-    module: "example",
-    script: "test",
-    output: "json",
-    mode: "get",
+let params = {
+    module: 'example',
+    script: 'test',
+    output: 'json',
+    mode: 'get',
     id: 1
 };
 ```
@@ -279,7 +279,7 @@ There should be no further output after this has been called.
 ```JS
 respond(true);  // shorthand for: {success: true}
 respond(false); // shorthand for: {success: false}
-respond({success: true, data: "myData"});
+respond({success: true, data: 'myData'});
 ```
 
 
@@ -290,7 +290,7 @@ The only parameter of this function can be a message as `string` or an `object` 
 There should be no further output after this has been called.
 
 ```JS
-error("error message"); // shorthand for: {success: false, error: "error message"}
+error('error message'); // shorthand for: {success: false, error: "error message"}
 ```
 
 

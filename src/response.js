@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
-var config = require("./config").server;
-var xml = require("js2xmlparser");
+let config = require('./config').server;
+let xml = require('js2xmlparser');
 
 /**
  * contains functions for responding data
  * out of the express server
  * @type {object}
  */
-var response = {
+let response = {
     /**
      * name of the xml root node
      * @access private
@@ -25,30 +25,29 @@ var response = {
      * @param {number} [status]
      * @return void
      */
-    output: function(req, res, string, data, status) {
+    output: (req, res, string, data, status) => {
         // correct response status for errors
-        if( !status && !data.success && data.error ) {
+        if (!status && !data.success && data.error) {
             status = 404;
         }
 
         res.status(status || 200);
 
         // text
-        if( req.query.output === "text" ) {
-            res.type("text/plain");
+        if (req.query.output === 'text') {
+            res.type('text/plain');
             res.send(string);
         }
 
         // xml
-        else if( req.query.output === "xml" ) {
-            res.type("text/xml");
-            //noinspection JSCheckFunctionSignatures
+        else if (req.query.output === 'xml') {
+            res.type('text/xml');
             res.send(xml.parse(response.xmlRootTag, data, {cdataInvalidChars: true}));
         }
 
         // json (default)
         else {
-            res.type("application/json");
+            res.type('application/json');
             res.send(JSON.stringify(data, null, 2));
         }
     },
@@ -60,7 +59,7 @@ var response = {
      * @param {string} message
      * @return void
      */
-    error: function(req, res, message) {
+    error: (req, res, message) => {
         response.output(req, res, message, {success: false, error: message}, 404);
     }
 };
