@@ -25,8 +25,6 @@ Just place the files on the right place and the Server will handle anything else
   * [XML](#xml)
   * [Text](#text)
 * [Available Modules](#available-modules)
-  * [Currently available](#currently-available)
-  * [Currently in private Beta](#currently-in-private-beta)
 * [Create an own Module](#create-an-own-module)
   * [Creating an executable Script for a Module](#creating-an-executable-script-for-a-module)
     * ['config' Parameter](#config-parameter)
@@ -196,14 +194,9 @@ So in short, everything not `1` is an error.
 There are currently only a few modules available by myself.
 Feel free to [create own Modules](https://github.com/eisbehr-/minoss-example) on your own or spread some new ones with other.
 
-
-### Currently available:
 - [minoss-example](https://github.com/eisbehr-/minoss-example): An example module explaining how to create and use modules
+- [minoss-google-home](https://github.com/eisbehr-/minoss-google-home): Plays audio files or TTS on Google Home devices
 - [minoss-hue](https://github.com/eisbehr-/minoss-hue): Controlling Philips Hue devices and lamps
-
-
-### Currently in private Beta:
-- [minoss-surveillance](https://github.com/eisbehr-/minoss-surveillance): Controlling the Synology Surveillance Station
 - [minoss-pushover](https://github.com/eisbehr-/minoss-pushover): Create and send push notifications via PushOver
 
 
