@@ -1,7 +1,7 @@
 {
   "name": "minoss",
   "title": "Mini Node Script Server",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Mini Node Script Server - Simple API Server with auto-loading, abstraction and configuration handling for IoT automation.",
   "main": "server.js",
   "homepage": "https://github.com/eisbehr-/minoss",

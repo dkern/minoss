@@ -198,6 +198,7 @@ Feel free to [create own Modules](https://github.com/eisbehr-/minoss-example) on
 - [minoss-google-home](https://github.com/eisbehr-/minoss-google-home): Plays audio files or TTS on Google Home devices
 - [minoss-hue](https://github.com/eisbehr-/minoss-hue): Controlling Philips Hue devices and lamps
 - [minoss-pushover](https://github.com/eisbehr-/minoss-pushover): Create and send push notifications via PushOver
+- [minoss-telegram-bot](https://github.com/eisbehr-/minoss-telegram-bot): Adds a Telegram Bot to Minoss
 
 
 ## Create an own Module

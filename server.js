@@ -30,10 +30,10 @@ app.use(parser.urlencoded({extended: true}));
 routes(app);
 
 // register module-script route with desired output format
-app.all('/:output(xml|text|json)/:module([a-z]+)/:script([a-z]+)', handler.request);
+app.all('/:output(xml|text|json)/:module([a-z-]+)/:script([a-z-]+)', handler.request);
 
 // register default module-script routes
-app.all('/:module([a-z]+)/:script([a-z]+)', handler.request);
+app.all('/:module([a-z-]+)/:script([a-z-]+)', handler.request);
 
 // register 404 not found route
 app.all('*', (req, res) => response.error(req, res, _('error404')));
@@ -51,7 +51,7 @@ let instance = app.listen(port, () => {
 process.on('SIGINT', () => {
     console.log(_('serverShutDown'));
     instance.close();
-    process.exit(0);
+    setTimeout(() => process.exit(0), 200);
 });
 
 exports = module.exports = app;
