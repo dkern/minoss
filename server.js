@@ -1,6 +1,6 @@
 /**
  * Minoss - Mini Node Script Server - v0.1.9
- * https://github.com/eisbehr-/minoss
+ * https://github.com/dkern/minoss
  * 
  * Copyright 2016-2018, Daniel 'Eisbehr' Kern
  * 

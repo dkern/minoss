@@ -1,7 +1,7 @@
 # Minoss - Mini Node Script Server
-[![GitHub version](https://badge.fury.io/gh/eisbehr-%2Fminoss.svg)](http://github.com/eisbehr-/minoss)
+[![GitHub version](https://badge.fury.io/gh/dkern%2Fminoss.svg)](http://github.com/dkern/minoss)
 [![NPM version](https://badge.fury.io/js/minoss.svg)](http://www.npmjs.org/package/minoss)
-[![Dependency version](https://david-dm.org/eisbehr-/minoss.png)](https://david-dm.org/eisbehr-/minoss)
+[![Dependency version](https://david-dm.org/dkern/minoss.png)](https://david-dm.org/dkern/minoss)
 
 This is a small yet powerful server based on [`node.js`](https://nodejs.org) and [`express`](http://expressjs.com).
 It's designed to simple create and serve usable APIs for automatising things, like with the [`Raspberry Pi`](https://www.raspberrypi.org/) or whenever it's needed to easily execute scripts.
@@ -59,11 +59,11 @@ require('minoss');
 
 ### Installation in own Folder
 Another way is, inside a folder where wanted to install Minoss, just to download the project files.
-It's possible to download the [`zip` archive from GitHub](https://github.com/eisbehr-/minoss/archive/master.zip) or use `git` to download the latest files.
+It's possible to download the [`zip` archive from GitHub](https://github.com/dkern/minoss/archive/master.zip) or use `git` to download the latest files.
 With this way the core files of Minoss are stored inside the root folder.
 
 ```SH
-$ git clone https://github.com/eisbehr-/minoss.git .
+$ git clone https://github.com/dkern/minoss.git .
 ```
 
 
@@ -192,13 +192,13 @@ So in short, everything not `1` is an error.
 
 ## Available Modules
 There are currently only a few modules available by myself.
-Feel free to [create own Modules](https://github.com/eisbehr-/minoss-example) on your own or spread some new ones with other.
+Feel free to [create own Modules](https://github.com/dkern/minoss-example) on your own or spread some new ones with other.
 
-- [minoss-example](https://github.com/eisbehr-/minoss-example): An example module explaining how to create and use modules
-- [minoss-google-home](https://github.com/eisbehr-/minoss-google-home): Plays audio files or TTS on Google Home devices
-- [minoss-hue](https://github.com/eisbehr-/minoss-hue): Controlling Philips Hue devices and lamps
-- [minoss-pushover](https://github.com/eisbehr-/minoss-pushover): Create and send push notifications via PushOver
-- [minoss-telegram-bot](https://github.com/eisbehr-/minoss-telegram-bot): Adds a Telegram Bot to Minoss
+- [minoss-example](https://github.com/dkern/minoss-example): An example module explaining how to create and use modules
+- [minoss-google-home](https://github.com/dkern/minoss-google-home): Plays audio files or TTS on Google Home devices
+- [minoss-hue](https://github.com/dkern/minoss-hue): Controlling Philips Hue devices and lamps
+- [minoss-pushover](https://github.com/dkern/minoss-pushover): Create and send push notifications via PushOver
+- [minoss-telegram-bot](https://github.com/dkern/minoss-telegram-bot): Adds a Telegram Bot to Minoss
 
 
 ## Create an own Module
@@ -210,7 +210,7 @@ The name of the Files are also the name of the script.
 For example, when creating a folder and file named `example/test.js`, the module is named `example` and the dcript is named `test`.
 So the URl would be something like `http://hostname:8080/example/test`.
 
-More details and a full example can be found inside the [`minoss-example`](https://github.com/eisbehr-/minoss-example) repository.
+More details and a full example can be found inside the [`minoss-example`](https://github.com/dkern/minoss-example) repository.
 
 
 ### Creating an executable Script for a Module
@@ -370,7 +370,7 @@ $ gulp watch
 
 
 ## Bugs / Feature request
-Please [report](http://github.com/eisbehr-/minoss/issues) bugs and feel free to [ask](http://github.com/eisbehr-/minoss/issues) for new features directly on GitHub.
+Please [report](http://github.com/dkern/minoss/issues) bugs and feel free to [ask](http://github.com/dkern/minoss/issues) for new features directly on GitHub.
 
 
 ## License
